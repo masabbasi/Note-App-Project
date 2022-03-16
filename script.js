@@ -6,7 +6,8 @@ const myVar = {
     colorItem: $.querySelectorAll(".color-mode-item"),
     noteItem: $.querySelector(".note-item"),
     myNote: $.querySelector(".mynote"),
-    noteText: $.querySelector("span")
+    noteText: $.querySelector("span"),
+    deleteItem: $.querySelectorAll(".delete-icon")
 }
 
 function addNote () {
@@ -15,18 +16,19 @@ function addNote () {
     createDiv.style.backgroundColor=myVar.input.style.backgroundColor;
     let createSpan =$.createElement("span");
     let noteTexy=$.createTextNode(myVar.input.value);
+    let createTrash = $.createElement('i')
+    createTrash.className=('delete-icon fa-solid fa-trash')
     createSpan.appendChild(noteTexy);
     createDiv.appendChild(createSpan);
+    createDiv.appendChild(createTrash);
     myVar.myNote.appendChild(createDiv);
-    createDiv.addEventListener('click',removeNote)
+    createTrash.addEventListener("click",removeNote)
     myVar.input.value=""
     myVar.input.style.backgroundColor='';
 }
 
 function removeNote(event) {
     event.target.parentElement.remove()
-    // let itemDelete = event.target.parentElement;
-    // myVar.myNote.removeChild(itemDelete);
 }
 
 //////////////////Set Color - First Method
@@ -49,7 +51,7 @@ myVar.colorItem.forEach(function(item){
 )
 
 myVar.input.addEventListener('keypress',function(event){
-    if (event.key==='Enter' && myVar.input.value && myVar.input.value!=" " ) {
+    if (event.key==='Enter' && myVar.input.value.trim()!="") {
         addNote()
     }
 })
@@ -60,7 +62,7 @@ myVar.eraser.addEventListener('click',function(){
 })
 
 myVar.plus.addEventListener('click',function(){
-    if (myVar.input.value && myVar.input.value!=" " ) {
+    if (myVar.input.value && myVar.input.value.trim()!="" ) {
         addNote()
     }
 })
